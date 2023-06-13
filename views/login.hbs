@@ -1,0 +1,35 @@
+<header>
+  
+  <nav>
+    <a href="/">
+      <box-icon name='search-alt' class="search-alt" color="#00DFA2"></box-icon>
+    </a>
+
+    {{!-- <a href="login">
+      <box-icon name='log-in-circle' class="power-off" color="#00DFA2"></box-icon>
+    </a>
+    <a href="logout">
+      <box-icon name='log-out-circle' color="#00DFA2" id="logout"></box-icon>
+    </a> --}}
+          
+  </nav>
+  
+</header>
+
+<section>
+
+  <div class="title">
+    <h2>Login</h2>
+  </div>
+
+  <form id="login" class="login-register-form" method="POST" action="/auth/login">
+    <input placeholder='Email' class="login-register" type="email" name="email">
+    <input placeholder="Password" class="login-register" type="password" name="password">
+    <button type="submit" class="login-register-btn" >Submit</button>
+  </form>
+
+  <div class="to-register">
+    <p>Don't have a login? Register <a href="/auth/register">here</a>.</p>
+  </div>
+
+</section>

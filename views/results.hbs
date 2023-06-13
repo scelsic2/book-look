@@ -1,0 +1,34 @@
+<header class="results-header">
+
+    <div class="title-results">
+        <h1>BookLook</h1>
+        <box-icon name='search-alt' size="lg" class="search-alt" color="#00DFA2"></box-icon>
+    </div>
+
+    <nav>
+        <a href="#">
+            <box-icon name='list-ol' class="list-ol" color="#00DFA2"></box-icon>
+        </a>
+
+        <a href="/auth/login">
+            <box-icon name='log-in-circle' class="power-off" color="#00DFA2"></box-icon>
+        </a>
+        <a href="auth/logout">
+            <box-icon name='log-out-circle' color="#00DFA2" id="logout"></box-icon>
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="results-container">
+    <div class="single-result" key="{{key}}">
+        <h2 class="single-title">{{title}}</h2>
+        <h3 class="single-author">{{author}}</h3>
+        <div class="list-icon-div">
+          <box-icon class="list-plus" name='plus-circle'></box-icon>  
+          <box-icon class="list-remove hide" name='x-circle'></box-icon>
+        </div>
+        
+    </div>
+</div>

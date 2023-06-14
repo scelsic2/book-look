@@ -4,12 +4,13 @@ const router = require('express').Router();
 router.get('/results/:key', async (req, res)=> {
 
 let query = req.params.key;
+let isLoggedIn = false
 
   const apiUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(
     query
   )}`;
 
-  console.log(apiUrl);
+  console.log('apiURL: ' + apiUrl);
 
   let response = {
     "title": "Not found",
@@ -27,53 +28,43 @@ let query = req.params.key;
       const docs = data.docs;
       docs.every((doc) => {
 
-        console.log(' testing ', doc.key, req.params.key);
+        console.log('doc.key: '+ doc.key, + 'req.params: ' + req.params.key);
 
         if(doc.key == req.params.key) {
 
             console.log('found match')
 
+            const userId = req.session.user_id
+             if(!userId) {
+                isLoggedIn = false
+              } else {
+                isLoggedIn = true
+              }
+
             response.title = doc.title
             response.author = doc.author_name
             response.subject = doc.subject
-            response.key = doc.key;
+            response.key = doc.key
+            response.isLoggedIn = isLoggedIn
+            response.userId = userId
             return false;
         }
       });
+      console.log('Response from router.get one book at key is below:')
       console.log(response)
+      console.log('req.session is below:')
+      console.log(req.session)
+      console.log('req.session.userId is below:')
+      console.log(req.session.user_id)
+
+      
+
       res.render('results', response);
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
 
-})
-
-// Add book to list
-// router.post('/results/:key', async (req, res) => {
-//   try 
-//   {const {
-//     title,
-//     author
-//   } = req.body;
-
-//   const addBook = new Book ({
-//     title,
-//     author
-//   })
-
-//   const addedBook = await newBook.save()
-
-//   res.status(201).json(addedBook);
-//   } catch (error) {
-//     res.status(500).json({ error: 
-//       'Book was not added to list.'
-//     })
-//   }
-// })
-
-router.get('/list/:id', async(req, res) => {
-  res.render('list')
 })
 
 module.exports = router;

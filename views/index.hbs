@@ -1,10 +1,12 @@
 <header>
   
   <nav>
-    <a href="/auth/user/{{id}}">
+   
+    {{#if isLoggedIn}}
+
+     <a href="/auth/user/{{userId}}">
       <box-icon name='list-ol' class="list-ol" color="#00DFA2"></box-icon>
     </a>
-    {{#if loggedIn}}
 
     <a href="/auth/logout">
       <box-icon name='log-out-circle' color="#00DFA2" id="logout"></box-icon>

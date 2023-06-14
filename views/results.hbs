@@ -6,16 +6,24 @@
     </div>
 
     <nav>
-        <a href="#">
+
+        {{#if isLoggedIn}}
+
+        <a href="/auth/user/{{userId}}">
             <box-icon name='list-ol' class="list-ol" color="#00DFA2"></box-icon>
         </a>
 
-        <a href="/auth/login">
-            <box-icon name='log-in-circle' class="power-off" color="#00DFA2"></box-icon>
-        </a>
         <a href="auth/logout">
             <box-icon name='log-out-circle' color="#00DFA2" id="logout"></box-icon>
         </a>
+
+        {{else}}
+
+         <a href="/auth/login">
+            <box-icon name='log-in-circle' class="power-off" color="#00DFA2"></box-icon>
+        </a>
+
+        {{/if}}
 
     </nav>
 

@@ -41,6 +41,7 @@ let isLoggedIn = false
                 isLoggedIn = true
               }
 
+            response.doc = doc  
             response.title = doc.title
             response.author = doc.author_name
             response.subject = doc.subject

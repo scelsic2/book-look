@@ -72,8 +72,8 @@ router.get('/user/', async(req, res) => {
 
 router.get('/user/:id', async (req, res) => {
     try {
-      const userId = req.params.id;
-
+      //const userId = req.params.id;
+      const userId = req.session.user_id;
       const user = await User.findById(userId).populate('email');
       
         if(user) {
@@ -104,14 +104,17 @@ router.get('/user/:id', async (req, res) => {
     }
 });
 
-router.post('/user/:id', async (req, res) => {
-    const addBook = Book.create(res.body)
-    console.log('Router.post user/:id: ' + addBook)
-})
-
+router.post('/user/add', async (req, res) => {
+    const userId = req.session.user_id;
+  
+    console.log(`req.body from post book is below:`)
+    console.log(req.body)
+    res.redirect(`/auth/user/${userId}`)
+  });
+  
 router.get('/home/:id', async (req, res) => {
     try {
-        const userId = req.params.id;
+        const userId = req.session.user_id;
 
         const user = await User.findById(userId).populate('_id')
 
@@ -130,24 +133,12 @@ router.get('/home/:id', async (req, res) => {
       }
 })
 
-router.get(`/api/results/:key`, async (req, res) => {
-    try {
-        const userId = req.params.id
-        const user = await User.findById(userId).populate('_id')
-
-        const foundBook = res.body
-        console.log('help me')
-
-    } catch (err) {
-        res.status(500).json({ error: 'Your get route for result does not work.' });
-      }
-})
-
 router.get('/logout', (req, res)=> {
     req.session.destroy()
     isLoggedIn = false
     res.redirect('/')
     console.log('User logged out.')
 })
+
 
 module.exports = router;

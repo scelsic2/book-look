@@ -108,24 +108,48 @@ if(searchInput != null) {
 }
 
 function toggleList () {
-  if (listPlus.classList.contains('hide')) {
-    listPlus.classList.remove('hide')
-    listRemove.classList.add('hide')
-
-    const title = singleTitle.innerText;
-    const author = singleAuthor.innerText
-
-  } else {
-    listPlus.classList.add('hide')
+  if (listRemove.classList.contains('hide')) {
     listRemove.classList.remove('hide')
+    listPlus.classList.add('hide')
+
+    const addBook = {
+      "title": singleTitle.innerHTML,
+      "author": singleAuthor.innerHTML
+    }
+
+    fetch(`/auth/user/add`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(addBook),
+    })
+    .then(response => response.json())
+    .then(addBook => {
+      console.log(addBook)
+    })
+    .catch(error => {
+      console.error('Error: ', error);
+    })
+    
+  } else {
+    listRemove.classList.add('hide')
+    listPlus.classList.remove('hide')
   }
 };
  
-document.onload = function() {
-
   if (listPlus != null && listRemove != null) {
     listPlus.addEventListener('click', toggleList);
     listRemove.addEventListener('click', toggleList);
   }
 
-};
+  // function addAsFavorite() {
+  //   var stuff = { 'title': "Nick's cool book", "author": "Nick"};
+  //   fetch(`/user/${userId}/addFavorite`, {
+  //     method: 'POST',
+  //     body: JSON.stringify(stuff),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     });
+
+  // }

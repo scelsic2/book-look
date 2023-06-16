@@ -22,11 +22,11 @@
   <h1 class="list-title">My Reading List</h1>
   <div class="list-container">
     {{#each list}}
-    <div class="single-favorite">
+    <div class="single-book-on-list">
       <h2>{{this.title}}</h2>
       <p>{{this.author}}</p>
       <div class="list-icon-div">
-          <box-icon class="list-remove hide-me" name='x-circle' color="var(--lightest)" attribute="{{this._id}}"></box-icon>
+          <box-icon class="list-remove hide-me" name='x-circle' color="var(--lightest)" bookid="{{this._id}}"></box-icon>
         </div>
     </div>
     {{/each}}

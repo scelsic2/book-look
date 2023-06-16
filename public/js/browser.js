@@ -4,11 +4,13 @@ const searchIcon = document.querySelector('.search-icon');
 const searchEntry = document.querySelector('.search-entry');
 const entry = document.querySelector('.entry');
 const listIconDiv = document.querySelector('.list-icon-div');
-const listPlus = document.querySelector('.list-plus');
-const listRemove = document.querySelector('.list-remove')
+const listPlus = document.querySelectorAll('.list-plus');
+const listRemove = document.querySelectorAll('.list-remove')
 const singleTitle = document.querySelector('.single-title')
 const singleAuthor = document.querySelector('.single-author')
 const postError = document.querySelector('.error')
+const mainSearch = document.querySelector('.main-search')
+const findNextRead = document.querySelector('.find-next-read')
 
 let searchResults = [];
 
@@ -24,6 +26,7 @@ function bookSearch_click(e) {
 
 function bookSearch() {
   const query = searchInput.value;
+  sessionStorage.lastSearch = query;
   console.log("Book search entered.");
 
   const apiUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(
@@ -31,7 +34,7 @@ function bookSearch() {
   )}`;
 
   searchInput.value = "";
-
+  findNextRead.innerHTML = ""
     searchEntry.innerHTML = 
     `<h4 class="search-results-for">Search results for: ${query}</h4>`
 
@@ -80,6 +83,11 @@ function bookSearch() {
 
         clickableEntry.appendChild(resultElement)
         resultsContainer.appendChild(clickableEntry);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+        history.pushState({ path: newUrl }, '', newUrl);
+
       });
     })
     .catch((error) => {
@@ -93,15 +101,18 @@ if(searchInput != null) {
 }
 
 function toggleList (e) {
-  if (listRemove.classList.contains('hide')) {
-    listRemove.classList.remove('hide')
-    listPlus.classList.add('hide')
-  
-    const parentDiv = e.target.parentNode
-  
-    const buttonDelete = parentDiv.querySelector('.list-remove');
 
-    console.log('Add book clicked.')
+  const targetIcon = e.target.attributes.name.value
+  const parentDiv = e.target.parentNode
+
+  const buttonDelete = parentDiv.querySelector('.list-remove');
+  const buttonAdd = parentDiv.querySelector('.list-plus')
+
+  if (targetIcon === "plus-circle") {
+    buttonDelete.classList.remove('hide')
+    buttonAdd.classList.add('hide')
+    
+    console.log('Add book button clicked.', e.target)
 
     const addBook = {
       "title": singleTitle.innerHTML,
@@ -124,34 +135,57 @@ function toggleList (e) {
     .catch((error) => {
       console.error('Error: ', error);
       postError.innerHTML = 'Please login to add a book to your reading list.';
-      listRemove.classList.add('hide');
-      listPlus.classList.remove('hide');
+      buttonDelete.classList.add('hide');
+      buttonAdd.classList.remove('hide');
     })
     
-  } else {
-    listRemove.classList.add('hide')
-    listPlus.classList.remove('hide')
-
-    console.log('Remove book clicked.', e.target)
+  } else if (targetIcon === "x-circle"){
+    console.log('Remove book button clicked.', e.target)
   
     const bookid = e.target.attributes.bookid.value;
+
+    const removeDiv = parentDiv.parentNode;
+
+    removeDiv.parentNode.removeChild(removeDiv)
     
     fetch(`/auth/user/delete/${bookid}`, {
       method: 'DELETE'
     })
     .then(response => response.json())
-    .then(postError.innerHTML = '')
-    .then(postError.innerHTML = 'Book successfully removed from list.')
+    // .then(postError.innerHTML = '')
+    // .then(postError.innerHTML = 'Book successfully removed from list.')
     .then(removedBook => {
       console.log('Book removed from list: ', removedBook)
     })
     .catch(error => {
       console.error('Error: ', error)
+      postError.innerHTML = 'Please login to manage your reading list.';
+      buttonDelete.classList.remove('hide');
+      buttonAdd.classList.add('hide');
     });
   }
 };
  
-  if (listPlus != null && listRemove != null) {
-    listPlus.addEventListener('click', toggleList);
-    listRemove.addEventListener('click', toggleList);
+if (listPlus != null && listRemove != null) {
+
+    listPlus.forEach(listPlus => {
+      listPlus.addEventListener('click', toggleList)
+    })
+    listRemove.forEach(listRemove => {
+      listRemove.addEventListener('click', toggleList)
+    })
   }
+  
+
+// window.onload = function() {
+//   if(sessionStorage != null) {
+//     if(sessionStorage.lastSearch != null && sessionStorage.lastSearch != '') {
+//       searchInput.value = sessionStorage.lastSearch;
+//       mainSearch.classList.add('main-search-with-text');
+//       mainSearch.remove.classList('main-search')
+//     } else {
+//       mainSearch.classList.remove('main-search-with-text')
+//       mainSearch.classList.add('main-search')
+//     }
+//   }
+// };

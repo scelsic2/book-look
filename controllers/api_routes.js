@@ -57,8 +57,6 @@ let isLoggedIn = false
       console.log('req.session.userId is below:')
       console.log(req.session.user_id)
 
-      
-
       res.render('results', response);
     })
     .catch((error) => {

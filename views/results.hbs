@@ -5,9 +5,13 @@
         <box-icon name='search-alt' size="lg" class="search-alt" color="var(--darkest)"></box-icon>
     </div>
 
-    <nav>
+    <nav class="git-nav">
 
         {{#if isLoggedIn}}
+
+        <a href="/auth/home/{{userId}}">
+            <box-icon name='search-alt' class="search-alt" color="var(--darkest)"></box-icon>
+        </a>
 
         <a href="/auth/user/{{userId}}">
             <box-icon name='list-ol' class="list-ol" color="var(--darkest)"></box-icon>
@@ -29,14 +33,37 @@
 
 </header>
 
+{{#if isLoggedIn}}
+
 <div class="results-container">
-    <div class="single-result" key="{{key}}">
+    <div class="single-result single-result-logged-in" key="{{key}}">
         <h2 class="single-title">{{title}}</h2>
         <h3 class="single-author">{{author}}</h3>
+        
         <div class="list-icon-div">
           <box-icon class="list-plus" name='plus-circle' color="var(--lightest)"></box-icon>  
           <box-icon class="list-remove hide hide-me" name='x-circle' color="var(--lightest)" ></box-icon>
         </div>
-        <p class="error">{{error}}</p>
+    <p class="error">{{error}}</p>
+
     </div>
+
+</div>    
+    
+ {{else}}
+
+<div class="results-container">
+    <div class="single-result" key="{{key}}">
+        <h2 class="single-title">{{title}}</h2>
+        <h3 class="single-author">{{author}}</h3>
+    </div>
+
+</div>    
+
+    <p class="login-register-to-add">
+        <a href="/auth/login">Login</a> or <a href="/auth/register">Register</a> <br> to add this book to your reading list!
+    </p>
+        
+    {{/if}}
+
 </div>

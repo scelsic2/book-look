@@ -8,6 +8,7 @@ const listPlus = document.querySelector('.list-plus');
 const listRemove = document.querySelector('.list-remove')
 const singleTitle = document.querySelector('.single-title')
 const singleAuthor = document.querySelector('.single-author')
+const postError = document.querySelector('.error')
 
 let searchResults = [];
 
@@ -32,12 +33,12 @@ function bookSearch() {
   searchInput.value = "";
 
     searchEntry.innerHTML = 
-    `<h4>Search results for: ${query}</h4>`
+    `<h4 class="search-results-for">Search results for: ${query}</h4>`
 
   resultsContainer.innerHTML = 
     `<div class='loading-div'>
           <h4>Loading...</h4>
-          <box-icon type='solid' name='book' color='#00DFA2' size='md' class='bx-tada' animation='tada'></box-icon>
+          <box-icon type='solid' name='book' color='var(--darkest)' size='md' class='bx-tada' animation='tada'></box-icon>
       <div class='loading-div'>
       `;
 
@@ -47,10 +48,6 @@ function bookSearch() {
       resultsContainer.innerHTML = "";
       console.log(data.docs);
       searchResults = data.docs;
-    //   const numFound = data.NumFound;
-      // if (docs.length === 0) {
-      //   resultsContainer.innerHTML = "No results found.";
-      // }
 
       const docs = data.docs;
       
@@ -64,7 +61,8 @@ function bookSearch() {
 
       docs.forEach((doc) => {
         const title = doc.title;
-        const author = doc.author_name ? doc.author_name[0] : "Unknown";
+        const author = doc.author_name[0]
+
         const firstPublishYear = doc.first_publish_year || "Unknown";
         
         const clickableEntry = document.createElement('a');
@@ -89,33 +87,26 @@ function bookSearch() {
     });
 }
 
-// const loginIcon = document.querySelector('#login')
-// const logoutIcon = document.querySelector('logout')
-
-// if(isUserLoggedIn) {
-//       loginIcon.classList.add('hide')
-//       logoutIcon.classList.remove('hide')
-//       console.log('User is logged in.')
-// } else {
-//       loginIcon.classList.remove('hide')
-//       logoutIcon.classList.add('hide')
-//       console.log('User is logged out.')
-//   }
-
 if(searchInput != null) { 
   searchInput.addEventListener("keyup", bookSearch_keyUp);
   searchIcon.addEventListener("click", bookSearch_click);
 }
 
-function toggleList () {
+function toggleList (e) {
   if (listRemove.classList.contains('hide')) {
     listRemove.classList.remove('hide')
     listPlus.classList.add('hide')
+  
+    const parentDiv = e.target.parentNode
+  
+    const buttonDelete = parentDiv.querySelector('.list-remove');
+
+    console.log('Add book clicked.')
 
     const addBook = {
       "title": singleTitle.innerHTML,
       "author": singleAuthor.innerHTML
-    }
+    };
 
     fetch(`/auth/user/add`, {
       method: 'POST',
@@ -125,16 +116,38 @@ function toggleList () {
       body: JSON.stringify(addBook),
     })
     .then(response => response.json())
-    .then(addBook => {
-      console.log(addBook)
+    .then((bookResponse) => {
+      console.log(bookResponse);
+      buttonDelete.setAttribute('bookId', bookResponse._id);
     })
-    .catch(error => {
+    .then(postError.innerHTML = 'Book successfully added to list.')
+    .catch((error) => {
       console.error('Error: ', error);
+      postError.innerHTML = 'Please login to add a book to your reading list.';
+      listRemove.classList.add('hide');
+      listPlus.classList.remove('hide');
     })
     
   } else {
     listRemove.classList.add('hide')
     listPlus.classList.remove('hide')
+
+    console.log('Remove book clicked.', e.target)
+  
+    const bookid = e.target.attributes.bookid.value;
+    
+    fetch(`/auth/user/delete/${bookid}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(postError.innerHTML = '')
+    .then(postError.innerHTML = 'Book successfully removed from list.')
+    .then(removedBook => {
+      console.log('Book removed from list: ', removedBook)
+    })
+    .catch(error => {
+      console.error('Error: ', error)
+    });
   }
 };
  
@@ -142,14 +155,3 @@ function toggleList () {
     listPlus.addEventListener('click', toggleList);
     listRemove.addEventListener('click', toggleList);
   }
-
-  // function addAsFavorite() {
-  //   var stuff = { 'title': "Nick's cool book", "author": "Nick"};
-  //   fetch(`/user/${userId}/addFavorite`, {
-  //     method: 'POST',
-  //     body: JSON.stringify(stuff),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     });
-
-  // }

@@ -5,17 +5,17 @@
     {{#if isLoggedIn}}
 
      <a href="/auth/user/{{userId}}">
-      <box-icon name='list-ol' class="list-ol" color="#00DFA2"></box-icon>
+      <box-icon name='list-ol' class="list-ol" color="var(--darkest)"></box-icon>
     </a>
 
     <a href="/auth/logout">
-      <box-icon name='log-out-circle' color="#00DFA2" id="logout"></box-icon>
+      <box-icon name='log-out-circle' color="var(--darkest)" id="logout" class="bx-rotate-90"></box-icon>
     </a>
 
     {{else}}
 
     <a href="/auth/login">
-      <box-icon name='log-in-circle' color="#00DFA2" id="login"></box-icon>
+      <box-icon name='log-in-circle' color="var(--darkest)" id="login" class="bx-rotate-90"></box-icon>
     </a>
 
     {{/if}}
@@ -23,16 +23,16 @@
   </nav>
 </header>
 
-<section>
+<section class="search-section">
 
   <div class="title">
     <h1>BookLook</h1>
-    <box-icon name='search-alt' size="lg" class="search-alt" color="#00DFA2"></box-icon>
+    <box-icon name='search-alt' size="lg" class="search-alt" color="var(--darkest)"></box-icon>
   </div>
 
   <div class="main-search-div">
     <input placeholder='Search' class='main-search' type="text">
-    <i class="search-icon" ><box-icon name='search-alt' color="#0079FF"></box-icon></i>
+    <i class="search-icon" ><box-icon name='search-alt' color="var(--darkest)"></box-icon></i>
   </div>
 
   <div class="search-entry"></div>

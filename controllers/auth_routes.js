@@ -24,11 +24,6 @@ router.post('/register', async (req, res) => {
 
         res.redirect(`/auth/user/${user._id}`)
 
-        // res.render('list', {
-        //     user: user,
-        //     isLoggedIn: isLoggedIn
-        // })
-
     } catch (err) {
         res.render('register', { error: 'A user with this email already exists.' });
     }
@@ -66,6 +61,7 @@ router.post('/login', async (req, res) => {
     res.redirect(`/auth/user/${user._id}`)
 })
 
+
 router.get('/user/', async(req, res) => {
     res.render('login')
 })
@@ -74,7 +70,7 @@ router.get('/user/:id', async (req, res) => {
     try {
       //const userId = req.params.id;
       const userId = req.session.user_id;
-      const user = await User.findById(userId).populate('email');
+      const user = await User.findById(userId).populate('list');
       
         if(user) {
             isLoggedIn = true  
@@ -86,17 +82,20 @@ router.get('/user/:id', async (req, res) => {
 
         if (!user) console.log('No user')   
 
-        console.log('Router.get user at id: ' + user)
+        console.log('Router.get user at id: ' + user._id)
         console.log('req.session from my reading list page is below:')
         console.log(req.session)
         const email = user.email
         const atIndex = email.indexOf('@')
         const username = email.substring(0, atIndex)
 
+        const list = user.list.map((list) => list.toObject())
+
       res.render('list', { 
         id: userId,
         username: username,
-        isLoggedIn: isLoggedIn
+        isLoggedIn: isLoggedIn,
+        list: list
     });
 
     } catch (err) {
@@ -109,8 +108,65 @@ router.post('/user/add', async (req, res) => {
   
     console.log(`req.body from post book is below:`)
     console.log(req.body)
-    res.redirect(`/auth/user/${userId}`)
+    
+    const addedBook = {
+        userId: userId,
+        title: req.body.title,
+        author: req.body.author
+    }
+    try {
+
+        const user = await User.findById(userId);
+
+        if(!user) {
+            return res.render('results', { error: 'Please login to add a book to your reading list.' });
+        }
+
+        const book = await Book.create(addedBook);
+        console.log('Book added to list: ', book);
+
+        res.json(book);
+
+        user.list.push(book)
+
+        await user.save()
+
+      } catch (error) {
+        console.error('Error adding book to list: ', error);
+        res.status(500).json({ error: 'An error occurred while adding book to list.' });
+      }
   });
+
+router.delete('/user/delete/:bookId', async (req, res) => {
+    const userId = req.session.user_id;
+    console.log('User Id: ' + userId)
+    const bookId = req.params.bookId;
+    console.log('Book Id: ' + bookId)
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.'})
+        }
+
+        console.log(' user books ', user.list )
+
+        const bookIndex = user.list.findIndex(book => `new ObjectId("${book._id}")` === `new ObjectId("${bookId}")`)
+
+        if (bookIndex === -1) {
+            return res.status(404).json({ error: 'This book was not found on your list.'})
+        }
+
+        const removedBook = user.list.splice(bookIndex, 1)[0];
+        await user.save();
+
+        res.json(removedBook);
+    } catch (error) {
+        console.error('Error removing book from list: ', error);
+        res.status(500).json({ error: 'An error occurred while removing book from the list.'})
+    }
+})
   
 router.get('/home/:id', async (req, res) => {
     try {
@@ -130,7 +186,7 @@ router.get('/home/:id', async (req, res) => {
         })
     } catch (err) {
         res.status(500).json({ error: 'Another error occurred while fetching home by user id.' });
-      }
+    }
 })
 
 router.get('/logout', (req, res)=> {

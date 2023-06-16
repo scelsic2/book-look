@@ -20,10 +20,6 @@ let isLoggedIn = false
   await fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
-    //   const numFound = data.NumFound;
-      // if (docs.length === 0) {
-      //   resultsContainer.innerHTML = "No results found.";
-      // }
 
       const docs = data.docs;
       docs.every((doc) => {
@@ -41,9 +37,12 @@ let isLoggedIn = false
                 isLoggedIn = true
               }
 
+            const singleAuthor = doc.author_name[0] 
+            // ? doc.author_name : 'Unknown'
+
             response.doc = doc  
             response.title = doc.title
-            response.author = doc.author_name
+            response.author = singleAuthor
             response.subject = doc.subject
             response.key = doc.key
             response.isLoggedIn = isLoggedIn

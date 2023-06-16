@@ -2,25 +2,36 @@
   <h3>Welcome {{username}}!</h3>
   <nav>
     <a href="/auth/home/{{id}}">
-      <box-icon name='search-alt' class="search-alt" color="#00DFA2"></box-icon>
+      <box-icon name='search-alt' class="search-alt" color="var(--darkest)"></box-icon>
     </a>
 
     {{#if isLoggedIn}}
     <a href="/auth/logout">
-      <box-icon name='log-out-circle' color="#00DFA2" id="logout"></box-icon>
+      <box-icon name='log-out-circle' color="var(--darkest)" id="logout" class="bx-rotate-90"></box-icon>
     </a>
-
     {{else}}
     <a href="/auth/login">
-      <box-icon name='log-in-circle' class="power-off" color="#00DFA2"></box-icon>
+      <box-icon name='log-in-circle' class="bx-rotate-90" color="var(--darkest)"></box-icon>
     </a>
-    
     {{/if}}
-          
   </nav>
-
 </header>
 
-<section class="reading-list"> 
-  <h1>My Reading List</h1>
+{{#if isLoggedIn}}
+<section class="reading-list">
+  <h1 class="list-title">My Reading List</h1>
+  <div class="list-container">
+    {{#each list}}
+    <div class="single-favorite">
+      <h2>{{this.title}}</h2>
+      <p>{{this.author}}</p>
+      <div class="list-icon-div">
+          <box-icon class="list-remove hide-me" name='x-circle' color="var(--lightest)" attribute="{{this._id}}"></box-icon>
+        </div>
+    </div>
+    {{/each}}
+  </div>
 </section>
+{{else}}
+<p>Please login to view your reading list.</p>
+{{/if}}

@@ -20,7 +20,7 @@ const userSchema = new Schema({
 
   },
 
-  favorites: [
+  list: [
     {
       type: Schema.Types.ObjectId,
       ref: 'book'

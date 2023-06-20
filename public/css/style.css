@@ -331,4 +331,7 @@ footer {
     .result > h3 {
         font-size: medium;
     }
+    header > nav > a {
+        margin-left: 5px;
+    }
   }

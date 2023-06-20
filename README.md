@@ -54,4 +54,4 @@ MIT License
 
 ## Deployed Application Link
 
-Paste your deployed application link here.
+https://pure-dusk-45825-8ad697a79e00.herokuapp.com

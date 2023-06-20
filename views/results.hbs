@@ -39,11 +39,14 @@
     <div class="single-result single-result-logged-in" key="{{key}}">
         <h2 class="single-title">{{title}}</h2>
         <h3 class="single-author">{{author}}</h3>
-        
+        {{#if key}}
         <div class="list-icon-div">
           <box-icon class="list-plus" name='plus-circle' color="var(--lightest)"></box-icon>  
           <box-icon class="list-remove hide hide-me" name='x-circle' color="var(--lightest)" ></box-icon>
         </div>
+        {{else}}
+        <div></div>
+        {{/if}}
     <p class="error">{{error}}</p>
 
     </div>

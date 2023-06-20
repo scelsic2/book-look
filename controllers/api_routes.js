@@ -28,7 +28,7 @@ let isLoggedIn = false
 
         if(doc.key == req.params.key) {
 
-            console.log('found match')
+            console.log('Match found.')
 
             const userId = req.session.user_id
              if(!userId) {
@@ -40,13 +40,27 @@ let isLoggedIn = false
             const singleAuthor = doc.author_name[0] 
             // ? doc.author_name : 'Unknown'
 
+            response.isLoggedIn = isLoggedIn
+            response.userId = userId
             response.doc = doc  
             response.title = doc.title
             response.author = singleAuthor
             response.subject = doc.subject
             response.key = doc.key
+            return false;
+        } else {
+          console.log('Match not found.')
+
+            const userId = req.session.user_id
+             if(!userId) {
+                isLoggedIn = false
+              } else {
+                isLoggedIn = true
+              }
+
             response.isLoggedIn = isLoggedIn
             response.userId = userId
+            response.key = false
             return false;
         }
       });

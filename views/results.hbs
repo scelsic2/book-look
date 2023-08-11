@@ -2,7 +2,7 @@
 
     <div class="title-results">
         <h1>BookLook</h1>
-        <box-icon name='search-alt' size="lg" class="search-alt" color="var(--darkest)"></box-icon>
+        <box-icon name='search-alt' size="lg" class="search-alt" color="var(--darker)"></box-icon>
     </div>
 
     <nav class="git-nav">
@@ -10,21 +10,21 @@
         {{#if isLoggedIn}}
 
         <a href="/auth/home/{{userId}}">
-            <box-icon name='search-alt' class="search-alt" color="var(--darkest)"></box-icon>
+            <box-icon name='search-alt' class="search-alt" color="var(--lightest)"></box-icon>
         </a>
 
         <a href="/auth/user/{{userId}}">
-            <box-icon name='list-ol' class="list-ol" color="var(--darkest)"></box-icon>
+            <box-icon name='list-ol' class="list-ol" color="var(--lightest)"></box-icon>
         </a>
 
         <a href="/auth/logout">
-            <box-icon name='log-out-circle' color="var(--darkest)" id="logout" class="bx-rotate-90"></box-icon>
+            <box-icon name='log-out-circle' color="var(--lightest)" id="logout" class="bx-rotate-90"></box-icon>
         </a>
 
         {{else}}
 
          <a href="/auth/login">
-            <box-icon name='log-in-circle' class="bx-rotate-90" color="var(--darkest)"></box-icon>
+            <box-icon name='log-in-circle' class="bx-rotate-90" color="var(--lightest)"></box-icon>
         </a>
 
         {{/if}}
@@ -41,8 +41,8 @@
         <h3 class="single-author">{{author}}</h3>
         {{#if key}}
         <div class="list-icon-div">
-          <box-icon class="list-plus" name='plus-circle' color="var(--lightest)"></box-icon>  
-          <box-icon class="list-remove hide hide-me" name='x-circle' color="var(--lightest)" ></box-icon>
+          <box-icon class="list-plus" name='plus-circle' color="var(--darkest)"></box-icon>  
+          <box-icon class="list-remove hide hide-me" name='x-circle' color="var(--darkest)" ></box-icon>
         </div>
         {{else}}
         <div></div>

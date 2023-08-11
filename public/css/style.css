@@ -1,8 +1,12 @@
 :root {
-    --darkest: rgb(110, 106, 153);
+    /* --darkest: rgb(110, 106, 153);
     --darker: rgb(43, 89, 152);
     --lighter: rgb(123, 171, 193);
-    --lightest: rgb(218, 211, 196);     
+    --lightest: rgb(218, 211, 196);  */
+    --darkest: rgb(21, 68, 170);
+    --darker: rgb(114, 50, 209);
+    --lighter: rgb(76, 173, 216);
+    --lightest: rgb(230, 160, 147); 
 }
 
 * {
@@ -12,9 +16,15 @@
 }
 
 html {
-    background: url(../images/horizon.jpg) no-repeat center center fixed;
+    background: url(../images/abstract.jpg) no-repeat center center fixed;
     background-size: cover;
     height: 100%;
+}
+
+.footer-wrap {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
 a {
@@ -42,7 +52,12 @@ header > nav {
 }
 
 .search-section {
-    background-color: rgba(123, 171, 193, .8);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     width: fit-content;
     margin: auto;
     margin-top: 100px;
@@ -61,6 +76,7 @@ header > nav {
 .title > h1, .title > h2{
     font-size: xx-large;
     color: var(--lightest);
+    text-shadow: 2px 2px 2px var(--darker)
 }
 
 .main-search-div{
@@ -94,7 +110,7 @@ header > nav {
     position: relative;
     padding: 15px 40px 15px 20px;
     width: 55px;
-    color: var(--darkest);
+    color: var(--darker);
     font-size: 16px;
     font-weight: 100;
     border: none;
@@ -113,7 +129,7 @@ i{
 
 .find-next-read {
     text-align: center;
-    color: var(--darkest);
+    color: var(--darker);
 }
 
 .search-entry {
@@ -121,7 +137,7 @@ i{
 }
 
 .search-results-for {
-    color: var(--lightest);
+    color: var(--darker);
 }
 
 .loading-div {
@@ -132,17 +148,17 @@ i{
 
 .loading-div > h4 {
     margin-left: 8px;
-    color: var(--darkest);
+    color: var(--darker);
 }
 
 .result-number-p {
     margin: 5px;
-    color: var(--darkest)
+    color: var(--darker)
 }
 
 .results-container {
-    max-height: 90vmax;
     overflow-y: auto;
+    max-height: 90vmax;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -153,14 +169,18 @@ i{
 }
 
 .result, .single-result, .single-book-on-list, .single-result-logged-in {
-    background-color:var(--lighter);
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.4px);
+    -webkit-backdrop-filter: blur(8.4px);
+    border: 1px solid rgba(255, 255, 255, 0.3); 
     border-radius: 5px;
     width: 300px;
     padding: 20px;
     margin: 10px;
     text-align: center;
     color: var(--darker);
-    border-radius: 5px;
 }
 
 .single-result-logged-in, .single-book-on-list {
@@ -168,12 +188,17 @@ i{
 }
 
 .result:hover, .single-book-on-list:hover {
-    background-color: rgba(123, 171, 193, .6);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .single-result {
     margin: 50px 10px 10px 10px;
-    background-color: rgba(123, 171, 193, .8);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .login-register-to-add {
@@ -195,7 +220,8 @@ i{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    color: var(--darkest);
+    color: var(--lightest);
+    text-shadow: 2px 2px 2px var(--darker)
 }
 
 .list-icon-div {
@@ -218,8 +244,12 @@ i{
 }
 
 .login-register-section {
-    background-color: rgba(123, 171, 193, .8);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     width: fit-content;
     margin: auto;
     padding: 20px;
@@ -236,7 +266,7 @@ i{
     position: relative;
     padding: 15px 40px 15px 20px;
     width: 200px;
-    color: var(--darkest);
+    color: var(--darker);
     font-size: 16px;
     font-weight: 100;
     border: none;
@@ -247,7 +277,7 @@ i{
 
 .login-register-btn {
     padding: 10px 20px;
-    background-color: var(--darkest);
+    background-color: var(--darker);
     border: none;
     border-radius: 5px;
     color: var(--lightest);
@@ -277,28 +307,32 @@ i{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    color: var(--darkest);
+    color: var(--lightest);
 }
 
 .reading-list {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(123, 171, 193, .8);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     width: fit-content;
     padding: 20px;
     margin: auto;
-    border-radius: 5px;
 }
 
 .list-title {
-    color: var(--lightest);
+    color: var(--darker);
     text-align: center;
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
+    margin-top: auto;
+    text-align: center;
 }
 
   @media (max-width: 415px) {

@@ -2,9 +2,7 @@
   
   <nav class="git-nav">
     <div class="git-div">
-      <a target="_blank" href="https://github.com/scelsic2/book-look">
-        <box-icon type='logo' name='github' class="git"></box-icon>
-      </a>
+      
     </div>
 
   <div class="next-to-git-div">
@@ -12,17 +10,17 @@
     {{#if isLoggedIn}}
 
      <a href="/auth/user/{{userId}}">
-      <box-icon name='list-ol' class="list-ol" color="var(--darkest)"></box-icon>
+      <box-icon name='list-ol' class="list-ol" color="var(--lightest)"></box-icon>
     </a>
 
     <a href="/auth/logout">
-      <box-icon name='log-out-circle' color="var(--darkest)" id="logout" class="bx-rotate-90"></box-icon>
+      <box-icon name='log-out-circle' color="var(--lightest)" id="logout" class="bx-rotate-90"></box-icon>
     </a>
 
     {{else}}
 
     <a href="/auth/login">
-      <box-icon name='log-in-circle' color="var(--darkest)" id="login" class="bx-rotate-90"></box-icon>
+      <box-icon name='log-in-circle' color="var(--lightest)" id="login" class="bx-rotate-90"></box-icon>
     </a>
 
     {{/if}}
@@ -32,16 +30,18 @@
   </nav>
 </header>
 
+<div class="footer-wrap">
+
   <section class="search-section">
 
     <div class="title">
       <h1>BookLook</h1>
-      <box-icon name='search-alt' size="lg" class="search-alt" color="var(--darkest)"></box-icon>
+      <box-icon name='search-alt' size="lg" class="search-alt" color="var(--darker)"></box-icon>
     </div>
 
     <div class="main-search-div">
       <input placeholder='Search' class='main-search main-search-with-text' type="text" value="{{lastSearch}}">
-      <i class="search-icon" ><box-icon name='search-alt' color="var(--darkest)"></box-icon></i>
+      <i class="search-icon" ><box-icon name='search-alt' color="var(--darker)"></box-icon></i>
     </div>
 
     <p class="find-next-read">Find your next read!</p>
@@ -49,3 +49,11 @@
     <div class="results-container"></div>
 
   </section>
+
+  <footer>
+    <a target="_blank" href="https://github.com/scelsic2/book-look">
+        <box-icon type='logo' name='github' class="git"></box-icon>
+      </a>
+  </footer>
+
+  </div>

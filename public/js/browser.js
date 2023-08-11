@@ -41,7 +41,7 @@ function bookSearch() {
   resultsContainer.innerHTML = 
     `<div class='loading-div'>
           <h4>Loading...</h4>
-          <box-icon type='solid' name='book' color='var(--darkest)' size='md' class='bx-tada' animation='tada'></box-icon>
+          <box-icon type='solid' name='book' color='var(--darker)' size='md' class='bx-tada' animation='tada'></box-icon>
       <div class='loading-div'>
       `;
 
